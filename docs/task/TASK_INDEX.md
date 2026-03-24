@@ -1,30 +1,44 @@
 # Task Index - AI-WorkHub
 
-All tasks for the AI-WorkHub project are documented here.
+> 基于 AI Town (a16z-infra/ai-town) 架构重新设计
 
 ## Quick Reference
 
 | Task ID | Title | Priority | Sprint | Status | Dependencies |
 |---------|-------|----------|--------|--------|--------------|
 | [TASK-1.1](./tasks/TASK-1.1-PROJECT-STRUCTURE.md) | Project Structure Setup | P0 | 1 | TODO | - |
-| [TASK-1.2](./tasks/TASK-1.2-PI-MONO-INTEGRATION.md) | pi-mono Integration | P0 | 1 | TODO | TASK-1.1 |
-| [TASK-1.3](./tasks/TASK-1.3-DATABASE-SCHEMA.md) | Database Schema Design | P0 | 1 | TODO | TASK-1.1 |
-| [TASK-2.1](./tasks/TASK-2.1-EMPLOYEE-CRUD.md) | AI Employee CRUD API | P0 | 2 | TODO | TASK-1.3 |
-| [TASK-2.2](./tasks/TASK-2.2-TEAM-CRUD.md) | AI Team CRUD API | P0 | 2 | TODO | TASK-1.3, TASK-2.1 |
-| [TASK-2.3](./tasks/TASK-2.3-TASK-MANAGEMENT.md) | Task Management API | P0 | 2 | TODO | TASK-1.3, TASK-2.1, TASK-2.2 |
+| [TASK-1.2](./tasks/TASK-1.2-DATABASE-SCHEMA.md) | Database Schema Design | P0 | 1 | TODO | TASK-1.1 |
+| [TASK-1.3](./tasks/TASK-1.3-PI-MONO-INTEGRATION.md) | pi-mono Integration | P0 | 1 | TODO | TASK-1.1 |
+| [TASK-2.1](./tasks/TASK-2.1-EMPLOYEE-CRUD.md) | AI Employee CRUD API | P0 | 2 | TODO | TASK-1.2 |
+| [TASK-2.2](./tasks/TASK-2.2-TEAM-CRUD.md) | AI Team CRUD API | P0 | 2 | TODO | TASK-1.2, TASK-2.1 |
+| [TASK-2.3](./tasks/TASK-2.3-TASK-MANAGEMENT.md) | Task Management API | P0 | 2 | TODO | TASK-1.2, TASK-2.1, TASK-2.2 |
+| [TASK-3.1](./tasks/TASK-3.1-AGENT-MANAGEMENT.md) | Agent Instance Management | P0 | 3 | TODO | TASK-1.3 |
+| [TASK-3.2](./tasks/TASK-3.2-MEMORY-SYSTEM.md) | Memory System | P0 | 3 | TODO | TASK-1.2 |
+| [TASK-3.3](./tasks/TASK-3.3-REFLECTION-SYSTEM.md) | Reflection System | P1 | 3 | TODO | TASK-3.2 |
+| [TASK-3.4](./tasks/TASK-3.4-CONVERSATION-SYSTEM.md) | Conversation System | P0 | 3 | TODO | TASK-3.1, TASK-3.2 |
+| [TASK-3.5](./tasks/TASK-3.5-TASK-EXECUTION.md) | Task Execution Engine | P0 | 3 | TODO | TASK-3.1, TASK-3.2 |
+| [TASK-3.6](./tasks/TASK-3.6-TEAM-ORCHESTRATION.md) | Team Orchestration | P1 | 3 | TODO | TASK-2.2, TASK-3.1 |
 | [TASK-6.1](./tasks/TASK-6.1-FRONTEND-SETUP.md) | Frontend Setup & Design System | P0 | 6 | TODO | TASK-2.3 |
 
 ## Sprint Overview
 
-### Sprint 1: Project Foundation (~9h)
+### Sprint 1: Project Foundation (~10h)
 - [TASK-1.1](./tasks/TASK-1.1-PROJECT-STRUCTURE.md) - Project structure setup (2h)
-- [TASK-1.2](./tasks/TASK-1.2-PI-MONO-INTEGRATION.md) - pi-mono integration (4h)
-- [TASK-1.3](./tasks/TASK-1.3-DATABASE-SCHEMA.md) - Database schema (3h)
+- [TASK-1.2](./tasks/TASK-1.2-DATABASE-SCHEMA.md) - Database schema (4h)
+- [TASK-1.3](./tasks/TASK-1.3-PI-MONO-INTEGRATION.md) - pi-mono integration (4h)
 
 ### Sprint 2: Core Entity Management (~18h)
 - [TASK-2.1](./tasks/TASK-2.1-EMPLOYEE-CRUD.md) - Employee CRUD API (6h)
 - [TASK-2.2](./tasks/TASK-2.2-TEAM-CRUD.md) - Team CRUD API (6h)
 - [TASK-2.3](./tasks/TASK-2.3-TASK-MANAGEMENT.md) - Task Management API (6h)
+
+### Sprint 3: Agent Core (pi-mono) (~42h)
+- [TASK-3.1](./tasks/TASK-3.1-AGENT-MANAGEMENT.md) - Agent Instance Management (6h)
+- [TASK-3.2](./tasks/TASK-3.2-MEMORY-SYSTEM.md) - Memory System (8h)
+- [TASK-3.3](./tasks/TASK-3.3-REFLECTION-SYSTEM.md) - Reflection System (6h)
+- [TASK-3.4](./tasks/TASK-3.4-CONVERSATION-SYSTEM.md) - Conversation System (8h)
+- [TASK-3.5](./tasks/TASK-3.5-TASK-EXECUTION.md) - Task Execution Engine (8h)
+- [TASK-3.6](./tasks/TASK-3.6-TEAM-ORCHESTRATION.md) - Team Orchestration (6h)
 
 ## Documentation Structure
 
