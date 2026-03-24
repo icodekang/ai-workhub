@@ -6,9 +6,8 @@
 import Database from 'better-sqlite3';
 import path from 'path';
 import fs from 'fs';
-import { fileURLToPath } from 'url';
 
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
+declare const __dirname: string;
 const DATA_DIR = path.resolve(__dirname, '../../../data');
 const DB_PATH = process.env.DB_PATH || path.join(DATA_DIR, 'ai-workhub.db');
 const SCHEMA_PATH = path.join(__dirname, 'schema.sql');
