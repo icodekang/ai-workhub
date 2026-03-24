@@ -213,19 +213,27 @@
 ---
 
 ## Sprint 6: Frontend
+> **Design Requirement**: 简约 · 高级 (Minimalist Premium)
+> - 深色主题，饱和度低，科技感强
+> - 大量留白，信息密度适中
+> - 流畅微动效，hover反馈细腻
+> - 卡片化设计，圆角8-16px
 
-### Task 6.1: Frontend Project Setup
+### Task 6.1: Frontend Project Setup & Design System
 - **Priority**: P0
-- **Estimate**: 2 hours
-- **Description**: Initialize React project with routing and state management
+- **Estimate**: 3 hours
+- **Description**: Initialize React project with minimalist premium design system
 - **Acceptance Criteria**:
-  - [ ] Next.js/React project created
-  - [ ] React Router configured
-  - [ ] State management (Zustand/Redux) setup
-  - [ ] API client configured
+  - [ ] Next.js/React project with TypeScript
+  - [ ] Tailwind CSS with custom design tokens (dark theme)
+  - [ ] Design system: Color palette, typography, spacing, shadows
+  - [ ] Base UI components: Button, Input, Card, Badge, Modal, Avatar
+  - [ ] Layout components: Sidebar, Header, PageContainer
+  - [ ] Framer Motion for animations
+  - [ ] Lucide icons (linear style)
   - [ ] No authentication required (skip login page)
 - **Owner**: @coder
-- **Files**: `frontend/`
+- **Files**: `frontend/src/components/ui/`, `frontend/src/components/layout/`
 
 ### Task 6.2: Employee Management UI
 - **Priority**: P0

@@ -12,6 +12,7 @@ All tasks for the AI-WorkHub project are documented here.
 | [TASK-2.1](./tasks/TASK-2.1-EMPLOYEE-CRUD.md) | AI Employee CRUD API | P0 | 2 | TODO | TASK-1.3 |
 | [TASK-2.2](./tasks/TASK-2.2-TEAM-CRUD.md) | AI Team CRUD API | P0 | 2 | TODO | TASK-1.3, TASK-2.1 |
 | [TASK-2.3](./tasks/TASK-2.3-TASK-MANAGEMENT.md) | Task Management API | P0 | 2 | TODO | TASK-1.3, TASK-2.1, TASK-2.2 |
+| [TASK-6.1](./tasks/TASK-6.1-FRONTEND-SETUP.md) | Frontend Setup & Design System | P0 | 6 | TODO | TASK-2.3 |
 
 ## Sprint Overview
 

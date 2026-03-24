@@ -13,6 +13,20 @@ An AI-powered office simulation inspired by AI Town, where each employee is an a
 - **Database**: SQLite/PostgreSQL for conversation logs and task records
 - **Storage**: File storage for AI work products
 
+## Design Principles (前端设计要求)
+**风格定位**: 简约 · 高级 (Minimalist Premium)
+
+### Design Guidelines
+- **配色方案**: 
+  - 主色: 深色系 (#1a1a2e, #16213e) 或浅色纯净白 (#fafafa)
+  - 强调色: 科技蓝 (#4facfe) 或琥珀金 (#f093fb)
+  - 避免过于花哨的颜色，保持克制
+- **字体**: 使用高质量无衬线字体 (Inter, SF Pro Display, PingFang SC)
+- **布局**: 大量留白，信息密度适中，视觉呼吸感强
+- **交互**: 流畅的微动效，hover反馈细腻
+- **组件**: 卡片化设计，圆角适中 (8-16px)
+- **图标**: 线性图标风格，统一 stroke width
+
 ## Key Features
 
 ### 1. AI Employee Management
