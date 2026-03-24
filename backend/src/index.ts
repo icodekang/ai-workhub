@@ -6,6 +6,7 @@ import employeeRoutes from './routes/employees';
 import teamRoutes from './routes/teams';
 import taskRoutes from './routes/tasks';
 import memoryRoutes from './routes/memories';
+import conversationRoutes from './routes/conversations';
 import engineRoutes from './routes/engine';
 
 dotenv.config();
@@ -29,6 +30,7 @@ app.use('/api/employees', employeeRoutes);
 app.use('/api/employees', memoryRoutes);
 app.use('/api/teams', teamRoutes);
 app.use('/api/tasks', taskRoutes);
+app.use('/api/conversations', conversationRoutes);
 app.use('/api/engine', engineRoutes);
 
 app.listen(PORT, () => {
