@@ -26,3 +26,23 @@ export {
   generateReflectionInsights,
   generateBriefReflection,
 } from './reflection';
+
+// Team Orchestration exports
+export {
+  distributeTeamTask,
+  getTeamMemberLoadInfo,
+  getTeamDistributionStats,
+  buildTeamContext,
+  searchTeamMemories,
+  storeTeamMemory,
+  buildTeamSummaryPrompt,
+  buildTeamCoordinationPrompt,
+  distributeTask,
+  distributeTasks,
+  type DistributeOptions,
+  type DistributeResult,
+  type DistributionStrategy,
+  type DistributionResult,
+  type TeamMemberInfo,
+  type TeamContext,
+} from './orchestration';

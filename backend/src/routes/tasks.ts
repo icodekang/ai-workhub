@@ -154,4 +154,44 @@ router.get('/:id/execution', (req: Request, res: Response) => {
   return res.status(200).json(execution);
 });
 
+// POST /api/tasks/team-distribute - Distribute a team task to members
+router.post('/team-distribute', async (req: Request, res: Response) => {
+  const { teamId, title, description, strategy, assignToAll } = req.body;
+
+  if (!teamId || !title) {
+    return res.status(400).json({ error: 'teamId and title are required' });
+  }
+
+  // Import here to avoid circular dependency
+  const { distributeTeamTask } = await import('../agents/orchestration');
+
+  const result = distributeTeamTask({
+    teamId,
+    taskTitle: title,
+    taskDescription: description,
+    strategy: strategy ?? 'load_balanced',
+    assignToAll: assignToAll ?? false,
+  });
+
+  if (!result.success) {
+    return res.status(400).json({ error: result.error });
+  }
+
+  return res.status(201).json({
+    message: `Distributed to ${result.tasks.length} team member(s)`,
+    distribution: result.distribution,
+    tasks: result.tasks,
+  });
+});
+
+// GET /api/tasks/team/:teamId/stats - Get team distribution statistics
+router.get('/team/:teamId/stats', (req: Request, res: Response) => {
+  const { teamId } = req.params;
+
+  const { getTeamDistributionStats } = require('../agents/orchestration');
+
+  const stats = getTeamDistributionStats(teamId);
+  return res.status(200).json(stats);
+});
+
 export default router;
