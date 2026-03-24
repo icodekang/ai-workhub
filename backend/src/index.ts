@@ -3,6 +3,7 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import { initDb } from './storage/db';
 import employeeRoutes from './routes/employees';
+import teamRoutes from './routes/teams';
 
 dotenv.config();
 
@@ -22,6 +23,7 @@ app.get('/health', (_req, res) => {
 
 // Register API routes
 app.use('/api/employees', employeeRoutes);
+app.use('/api/teams', teamRoutes);
 
 app.listen(PORT, () => {
   console.log(`AI-WorkHub Backend running on port ${PORT}`);
