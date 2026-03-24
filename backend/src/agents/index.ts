@@ -6,6 +6,7 @@
  * - AgentRegistry / agentRegistry: Singleton registry for managing agents
  * - AgentLifecycle / agentLifecycle: Lifecycle management
  * - AgentChat / agentChat: Context-aware chat interface
+ * - Reflection functions for memory insight generation
  */
 
 export { PImonoAgent, AgentStatus } from './pi-mono/agent';
@@ -15,3 +16,13 @@ export { AgentLifecycle, agentLifecycle } from './lifecycle';
 export { AgentChat, agentChat } from './chat';
 export type { ChatContext, ChatResult } from './chat';
 export * from './types';
+
+// Reflection System exports
+export {
+  reflectOnMemories,
+  checkShouldReflect,
+  getMemoriesForReflection,
+  getReflectionStats,
+  generateReflectionInsights,
+  generateBriefReflection,
+} from './reflection';
