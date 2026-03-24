@@ -105,14 +105,18 @@ CREATE TABLE IF NOT EXISTS work_products (
 
 -- ============================================================
 -- memories - 记忆存储
+-- Supports both legacy types (episodic/semantic/working) and
+-- new AI Town-style types (conversation/task/reflection/relationship)
 -- ============================================================
 CREATE TABLE IF NOT EXISTS memories (
     id              TEXT PRIMARY KEY,
     employee_id     TEXT NOT NULL,
-    type            TEXT NOT NULL CHECK(type IN ('episodic', 'semantic', 'working')),
+    type            TEXT NOT NULL CHECK(type IN ('episodic', 'semantic', 'working', 'conversation', 'task', 'reflection', 'relationship')),
     content         TEXT NOT NULL,
     importance      REAL DEFAULT 0.5 CHECK(importance >= 0 AND importance <= 1),
+    last_access     INTEGER DEFAULT 0,
     created_at      INTEGER NOT NULL,
+    data            TEXT DEFAULT '{}',
     FOREIGN KEY (employee_id) REFERENCES employees(id) ON DELETE CASCADE
 );
 

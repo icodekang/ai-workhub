@@ -176,6 +176,8 @@ export class AgentChat {
       type,
       content,
       importance,
+      last_access: Date.now(),
+      data: '{}',
     });
 
     // Generate and store embedding

@@ -220,26 +220,4 @@ router.get('/agents/list', (_req: Request, res: Response) => {
   });
 });
 
-// POST /api/employees/:id/memories - Add a memory to an employee
-router.post('/:id/memories', async (req: Request, res: Response) => {
-  const { id } = req.params;
-  const { content, type, importance } = req.body;
-
-  if (!content || typeof content !== 'string') {
-    return res.status(400).json({ error: 'content is required' });
-  }
-
-  try {
-    const memory = await agentChat.addMemory(
-      id,
-      content,
-      type ?? 'episodic',
-      importance ?? 0.5
-    );
-    return res.status(201).json(memory);
-  } catch (err: any) {
-    return res.status(500).json({ error: err.message });
-  }
-});
-
 export default router;

@@ -138,10 +138,12 @@ export interface WorkProduct {
 export interface Memory {
   id: string;
   employee_id: string;
-  type: 'episodic' | 'semantic' | 'working';
+  type: 'episodic' | 'semantic' | 'working' | 'conversation' | 'task' | 'reflection' | 'relationship';
   content: string;
   importance: number;
+  last_access: number;
   created_at: number;
+  data: string; // JSON string with type-specific data
 }
 
 export interface MemoryEmbedding {
@@ -377,10 +379,11 @@ export function deleteWorkProduct(id: string): boolean {
 export function createMemory(mem: Omit<Memory, 'created_at'>): Memory {
   const db = getDb();
   const stmt = db.prepare(`
-    INSERT INTO memories (id, employee_id, type, content, importance, created_at)
-    VALUES (@id, @employee_id, @type, @content, @importance, @created_at)
+    INSERT INTO memories (id, employee_id, type, content, importance, last_access, created_at, data)
+    VALUES (@id, @employee_id, @type, @content, @importance, @last_access, @created_at, @data)
   `);
-  stmt.run({ ...mem, created_at: Date.now() });
+  const now = Date.now();
+  stmt.run({ ...mem, created_at: now, last_access: mem.last_access ?? now, data: mem.data ?? '{}' });
   return getMemoryById(mem.id)!;
 }
 
@@ -392,6 +395,13 @@ export function getMemoriesByEmployee(employeeId: string): Memory[] {
   return getDb().prepare(
     'SELECT * FROM memories WHERE employee_id = ? ORDER BY created_at DESC'
   ).all(employeeId) as Memory[];
+}
+
+export function updateMemoryLastAccess(id: string, timestamp?: number): boolean {
+  const db = getDb();
+  const ts = timestamp ?? Date.now();
+  const result = db.prepare('UPDATE memories SET last_access = ? WHERE id = ?').run(ts, id);
+  return result.changes > 0;
 }
 
 export function deleteMemory(id: string): boolean {

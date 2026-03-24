@@ -5,6 +5,7 @@ import { initDb } from './storage/db';
 import employeeRoutes from './routes/employees';
 import teamRoutes from './routes/teams';
 import taskRoutes from './routes/tasks';
+import memoryRoutes from './routes/memories';
 
 dotenv.config();
 
@@ -24,6 +25,7 @@ app.get('/health', (_req, res) => {
 
 // Register API routes
 app.use('/api/employees', employeeRoutes);
+app.use('/api/employees', memoryRoutes);
 app.use('/api/teams', teamRoutes);
 app.use('/api/tasks', taskRoutes);
 
