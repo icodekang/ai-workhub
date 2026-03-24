@@ -24,6 +24,7 @@ async function main() {
   const agent = agentRegistry.registerAgent({
     id: 'test-agent-001',
     employeeId: 'emp-001',
+    name: 'Alice',
     identity: '我是Alice，后端工程师，擅长Node.js和TypeScript。',
     plan: '测试pi-mono集成是否正常工作。',
     model: config.chatModel,

@@ -136,7 +136,7 @@ CREATE TABLE IF NOT EXISTS agents (
     id              TEXT PRIMARY KEY,
     employee_id     TEXT NOT NULL,
     config          TEXT NOT NULL,  -- JSON string with agent config
-    status          TEXT DEFAULT 'idle' CHECK(status IN ('idle', 'running', 'paused', 'stopped')),
+    status          TEXT DEFAULT 'idle' CHECK(status IN ('idle', 'working', 'chatting', 'error', 'paused', 'stopped')),
     created_at      INTEGER NOT NULL,
     updated_at      INTEGER NOT NULL,
     FOREIGN KEY (employee_id) REFERENCES employees(id) ON DELETE CASCADE

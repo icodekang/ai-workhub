@@ -1,11 +1,17 @@
 /**
  * Employee Service - Business logic for AI Employee management
+ *
+ * Integrates with AgentLifecycle for automatic agent lifecycle management:
+ * - Employee created → Agent auto-started
+ * - Employee deleted → Agent stopped and removed
+ * - Employee updated → Agent config updated
  */
 
 import { v4 as uuidv4 } from 'uuid';
 import * as db from '../storage/db';
 import { Employee } from '../storage/db';
-import { agentRegistry } from '../agents';
+import { agentLifecycle } from '../agents/lifecycle';
+import { agentRegistry } from '../agents/pi-mono/registry';
 
 export interface CreateEmployeeInput {
   name: string;
@@ -105,7 +111,7 @@ function toEmployeeSummary(emp: Employee) {
 }
 
 /**
- * Create a new employee and register a corresponding agent.
+ * Create a new employee and start a corresponding agent.
  */
 export function createEmployee(input: CreateEmployeeInput): { employee: ReturnType<typeof toEmployeeResponse>; error?: string } {
   const validationError = validateCreateInput(input);
@@ -125,7 +131,7 @@ export function createEmployee(input: CreateEmployeeInput): { employee: ReturnTy
     system_prompt: input.systemPrompt ?? null,
     model: input.model ?? 'gpt-4',
     temperature: input.temperature ?? 0.7,
-    status: 'inactive' as const,
+    status: 'active' as const, // Agent is started, so employee is active
   };
 
   // Insert into DB
@@ -135,28 +141,13 @@ export function createEmployee(input: CreateEmployeeInput): { employee: ReturnTy
   `);
   stmt.run({ ...employeeData, created_at: now, updated_at: now });
 
-  // Create corresponding agent in registry
-  agentRegistry.registerAgent({
-    id,
-    employeeId: id,
-    identity: input.identity ?? `You are ${input.name}, a ${input.role}.`,
-    plan: input.plan ?? 'free',
-    model: input.model ?? 'gpt-4',
-    temperature: input.temperature ?? 0.7,
-  });
-
-  // Also persist agent record in DB
-  db.createAgent({
-    id,
-    employee_id: id,
-    config: JSON.stringify({
-      identity: input.identity ?? `You are ${input.name}, a ${input.role}.`,
-      plan: input.plan ?? 'free',
-      model: input.model ?? 'gpt-4',
-      temperature: input.temperature ?? 0.7,
-    }),
-    status: 'idle',
-  });
+  // Start the agent (registers in registry + persists to DB)
+  try {
+    agentLifecycle.startAgent(id);
+  } catch (err) {
+    console.error(`[EmployeeService] Failed to start agent for employee ${id}:`, err);
+    // Continue anyway - employee is created, agent can be started manually
+  }
 
   const created = db.getEmployeeById(id)!;
   return { employee: toEmployeeResponse(created) };
@@ -196,7 +187,7 @@ export function listEmployees(filters?: ListEmployeesFilter): { employees: Retur
 }
 
 /**
- * Update an employee.
+ * Update an employee. If agent-related fields change, update the running agent config.
  */
 export function updateEmployee(id: string, input: UpdateEmployeeInput): { employee: ReturnType<typeof toEmployeeResponse> | null; error?: string } {
   const validationError = validateUpdateInput(input);
@@ -224,15 +215,24 @@ export function updateEmployee(id: string, input: UpdateEmployeeInput): { employ
     updates.updated_at = Date.now();
     db.updateEmployee(id, updates);
 
-    // Update agent config in DB (agentRegistry is synced on next access from DB)
-    const agentRecord = db.getAgentByEmployee(id);
-    if (agentRecord) {
-      const config = JSON.parse(agentRecord.config);
-      if (input.identity !== undefined) config.identity = input.identity;
-      if (input.temperature !== undefined) config.temperature = input.temperature;
-      if (input.plan !== undefined) config.plan = input.plan;
-      if (input.model !== undefined) config.model = input.model;
-      db.updateAgent(id, { config: JSON.stringify(config) });
+    // Sync agent config if agent-related fields changed
+    const agentFieldsChanged =
+      input.identity !== undefined ||
+      input.plan !== undefined ||
+      input.model !== undefined ||
+      input.temperature !== undefined;
+
+    if (agentFieldsChanged) {
+      try {
+        agentLifecycle.updateAgentConfig(id, {
+          identity: input.identity,
+          plan: input.plan,
+          model: input.model,
+          temperature: input.temperature,
+        });
+      } catch (err) {
+        console.warn(`[EmployeeService] Agent not running for ${id}, skipping config sync`);
+      }
     }
   }
 
@@ -241,21 +241,33 @@ export function updateEmployee(id: string, input: UpdateEmployeeInput): { employ
 }
 
 /**
- * Delete an employee.
+ * Delete an employee. Stops and removes the corresponding agent.
  */
 export function deleteEmployee(id: string): boolean {
   const existing = db.getEmployeeById(id);
   if (!existing) return false;
 
-  // Remove from agent registry
-  agentRegistry.remove(id);
-
-  // Remove agent record from DB
-  const agentRecord = db.getAgentByEmployee(id);
-  if (agentRecord) {
-    db.deleteAgent(agentRecord.id);
+  // Stop and remove agent (registry + DB)
+  try {
+    agentLifecycle.stopAgent(id);
+  } catch (err) {
+    console.warn(`[EmployeeService] Error stopping agent for ${id}:`, err);
   }
 
   // Delete the employee (team_members foreign key CASCADE handles cleanup)
   return db.deleteEmployee(id);
+}
+
+/**
+ * Get agent status for an employee.
+ */
+export function getAgentStatus(id: string): { status: string | null; agentId: string | null } {
+  const employee = db.getEmployeeById(id);
+  if (!employee) return { status: null, agentId: null };
+
+  const agent = agentRegistry.getByEmployeeId(id);
+  return {
+    status: agent?.status ?? null,
+    agentId: agent?.id ?? null,
+  };
 }

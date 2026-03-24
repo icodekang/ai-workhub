@@ -155,7 +155,7 @@ export interface Agent {
   id: string;
   employee_id: string;
   config: string; // JSON string
-  status: 'idle' | 'running' | 'paused' | 'stopped';
+  status: 'idle' | 'working' | 'chatting' | 'error' | 'paused' | 'stopped';
   created_at: number;
   updated_at: number;
 }
