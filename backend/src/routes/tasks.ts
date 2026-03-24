@@ -1,9 +1,12 @@
 /**
  * Task Routes - REST API for Task management
+ *
+ * Part of TASK-3.5 - Task Execution Engine: adds execution endpoints
  */
 
 import { Router, Request, Response } from 'express';
 import * as taskService from '../services/task.service';
+import { taskEngine, taskQueue } from '../engine';
 
 const router = Router();
 
@@ -119,6 +122,36 @@ router.delete('/:id', (req: Request, res: Response) => {
   }
 
   return res.status(204).send();
+});
+
+// POST /api/tasks/:id/execute - Manually trigger task execution
+router.post('/:id/execute', async (req: Request, res: Response) => {
+  const { id } = req.params;
+
+  const task = taskService.getTaskById(id);
+  if (!task) {
+    return res.status(404).json({ error: 'Task not found' });
+  }
+
+  // Queue the task for execution
+  taskEngine.onTaskCreated(id, task.assigneeType, task.assigneeId);
+
+  // Update status to queued
+  taskService.updateTaskStatus(id, { status: 'pending' });
+
+  return res.status(202).json({ message: 'Task queued for execution', taskId: id });
+});
+
+// GET /api/tasks/:id/execution - Get task execution status
+router.get('/:id/execution', (req: Request, res: Response) => {
+  const { id } = req.params;
+
+  const execution = taskQueue.getStatus(id);
+  if (!execution) {
+    return res.status(404).json({ error: 'No execution record found for task' });
+  }
+
+  return res.status(200).json(execution);
 });
 
 export default router;
