@@ -1,0 +1,62 @@
+/* Work Product Card Styles */
+
+.card {
+  height: 100%;
+}
+
+.content {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-4);
+}
+
+.iconWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  background: linear-gradient(135deg, var(--color-accent-primary) 0%, var(--color-accent-secondary) 100%);
+  border-radius: var(--radius-md);
+  color: white;
+  flex-shrink: 0;
+}
+
+.info {
+  flex: 1;
+  min-width: 0;
+}
+
+.filename {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--color-text-primary);
+  margin: 0 0 var(--space-2);
+  word-break: break-all;
+}
+
+.meta {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+}
+
+.size,
+.date {
+  font-size: 0.75rem;
+  color: var(--color-text-muted);
+}
+
+.owner {
+  font-size: 0.75rem;
+  color: var(--color-text-secondary);
+  margin: var(--space-1) 0 0;
+}
+
+.actions {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  flex-shrink: 0;
+}

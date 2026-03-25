@@ -1,0 +1,1 @@
+export { WorkProductCard } from './WorkProductCard';
