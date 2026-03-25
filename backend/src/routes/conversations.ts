@@ -27,6 +27,15 @@ import {
   getTeamData,
 } from '../agents/conversation';
 
+import {
+  searchMessages,
+  getMessagesByParticipant,
+  getMessagesByRoom,
+  getMessageStats,
+  exportConversationMessages,
+  type MessageSearchOptions,
+} from '../services/message-log.service';
+
 const router = Router();
 
 // ─── Create Conversation ─────────────────────────────────────────────────────
@@ -271,6 +280,102 @@ router.get('/', (req: Request, res: Response) => {
   }
 
   return res.status(400).json({ error: 'Provide type + roomId or type + employeeId' });
+});
+
+// ─── Message Logging (TASK-4.1) ────────────────────────────────────────────────
+
+// GET /api/messages/search - Search messages with filters
+router.get('/messages/search', (req: Request, res: Response) => {
+  const {
+    query,
+    conversationId,
+    senderId,
+    senderType,
+    participantId,
+    startTime,
+    endTime,
+    page,
+    limit,
+  } = req.query;
+
+  const options: MessageSearchOptions = {};
+
+  if (typeof query === 'string') options.query = query;
+  if (typeof conversationId === 'string') options.conversationId = conversationId;
+  if (typeof senderId === 'string') options.senderId = senderId;
+  if (senderType === 'user' || senderType === 'agent') options.senderType = senderType;
+  if (typeof participantId === 'string') options.participantId = participantId;
+  if (typeof startTime === 'string') options.startTime = parseInt(startTime, 10);
+  if (typeof endTime === 'string') options.endTime = parseInt(endTime, 10);
+
+  const result = searchMessages(options, {
+    page: page ? parseInt(page as string, 10) : 1,
+    limit: limit ? parseInt(limit as string, 10) : 20,
+  });
+
+  return res.status(200).json(result);
+});
+
+// GET /api/messages/participant/:participantId - Get messages for a participant
+router.get('/messages/participant/:participantId', (req: Request, res: Response) => {
+  const { participantId } = req.params;
+  const { page, limit } = req.query;
+
+  const result = getMessagesByParticipant(participantId, {
+    page: page ? parseInt(page as string, 10) : 1,
+    limit: limit ? parseInt(limit as string, 10) : 20,
+  });
+
+  return res.status(200).json(result);
+});
+
+// GET /api/messages/room/:type/:roomId - Get messages for a room
+router.get('/messages/room/:type/:roomId', (req: Request, res: Response) => {
+  const { type, roomId } = req.params;
+  const { page, limit } = req.query;
+
+  if (type !== 'direct' && type !== 'team') {
+    return res.status(400).json({ error: 'Room type must be "direct" or "team"' });
+  }
+
+  const result = getMessagesByRoom(type as 'direct' | 'team', roomId, {
+    page: page ? parseInt(page as string, 10) : 1,
+    limit: limit ? parseInt(limit as string, 10) : 20,
+  });
+
+  return res.status(200).json(result);
+});
+
+// GET /api/messages/stats - Get message statistics
+router.get('/messages/stats', (req: Request, res: Response) => {
+  const { conversationId, participantId, startTime, endTime } = req.query;
+
+  const options: MessageSearchOptions = {};
+  if (typeof conversationId === 'string') options.conversationId = conversationId;
+  if (typeof participantId === 'string') options.participantId = participantId;
+  if (typeof startTime === 'string') options.startTime = parseInt(startTime, 10);
+  if (typeof endTime === 'string') options.endTime = parseInt(endTime, 10);
+
+  const stats = getMessageStats(options);
+  return res.status(200).json(stats);
+});
+
+// GET /api/messages/export/:conversationId - Export conversation messages
+router.get('/messages/export/:conversationId', (req: Request, res: Response) => {
+  const { conversationId } = req.params;
+  const { format } = req.query;
+
+  const conversation = getConversation(conversationId);
+  if (!conversation) {
+    return res.status(404).json({ error: 'Conversation not found' });
+  }
+
+  const exportFormat = (format === 'text' ? 'text' : 'json');
+  const { content, filename } = exportConversationMessages(conversationId, exportFormat);
+
+  res.setHeader('Content-Type', exportFormat === 'json' ? 'application/json' : 'text/plain');
+  res.setHeader('Content-Disposition', `attachment; filename="${filename}"`);
+  return res.status(200).send(content);
 });
 
 export default router;
