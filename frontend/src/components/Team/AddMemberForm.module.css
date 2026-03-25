@@ -1,0 +1,147 @@
+/* Add Member Form Styles */
+
+.overlay {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(4px);
+  z-index: 300;
+  padding: var(--space-4);
+}
+
+.modal {
+  width: 100%;
+  max-width: 480px;
+  max-height: calc(100vh - var(--space-8));
+  overflow-y: auto;
+}
+
+.closeButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  background: transparent;
+  border: none;
+  border-radius: var(--radius-md);
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.closeButton:hover {
+  background-color: var(--color-bg-elevated);
+  color: var(--color-text-primary);
+}
+
+/* Form */
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.label {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--color-text-primary);
+}
+
+/* Employee List */
+.employeeList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  max-height: 240px;
+  overflow-y: auto;
+}
+
+.employeeOption {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-3);
+  background-color: var(--color-bg-secondary);
+  border: 1px solid var(--color-border-default);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  text-align: left;
+}
+
+.employeeOption:hover {
+  border-color: var(--color-border-hover);
+  background-color: var(--color-bg-tertiary);
+}
+
+.employeeOption.selected {
+  border-color: var(--color-accent-primary);
+  background-color: rgba(99, 102, 241, 0.1);
+}
+
+.employeeInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.employeeName {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--color-text-primary);
+}
+
+.employeeRole {
+  font-size: 0.75rem;
+  color: var(--color-text-secondary);
+}
+
+/* Role Options */
+.roleOptions {
+  display: flex;
+  gap: var(--space-2);
+}
+
+.roleOption {
+  flex: 1;
+  padding: var(--space-3);
+  background-color: var(--color-bg-secondary);
+  border: 1px solid var(--color-border-default);
+  border-radius: var(--radius-md);
+  color: var(--color-text-secondary);
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.roleOption:hover {
+  border-color: var(--color-border-hover);
+  color: var(--color-text-primary);
+}
+
+.roleOption.selected {
+  border-color: var(--color-accent-primary);
+  background-color: rgba(99, 102, 241, 0.1);
+  color: var(--color-accent-primary);
+}
+
+/* Empty state */
+.empty {
+  text-align: center;
+  padding: var(--space-8) 0;
+}
+
+.empty p {
+  color: var(--color-text-secondary);
+  margin: 0;
+}

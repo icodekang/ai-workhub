@@ -1,0 +1,161 @@
+/* Team Card Styles */
+
+.card {
+  height: 100%;
+}
+
+.header {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  margin-bottom: var(--space-4);
+}
+
+.iconWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  background: linear-gradient(135deg, var(--color-accent-secondary) 0%, var(--color-accent-primary) 100%);
+  border-radius: var(--radius-md);
+  color: white;
+  flex-shrink: 0;
+}
+
+.info {
+  flex: 1;
+  min-width: 0;
+}
+
+.name {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: var(--color-text-primary);
+  margin: 0;
+}
+
+.description {
+  font-size: 0.875rem;
+  color: var(--color-text-secondary);
+  margin: var(--space-1) 0 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.actions {
+  position: relative;
+}
+
+.menuButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  background: transparent;
+  border: none;
+  border-radius: var(--radius-md);
+  color: var(--color-text-muted);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.menuButton:hover {
+  background-color: var(--color-bg-elevated);
+  color: var(--color-text-primary);
+}
+
+.menu {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  min-width: 140px;
+  background-color: var(--color-bg-elevated);
+  border: 1px solid var(--color-border-default);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-lg);
+  z-index: 100;
+  overflow: hidden;
+}
+
+.menuItem {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  width: 100%;
+  padding: var(--space-3);
+  background: transparent;
+  border: none;
+  color: var(--color-text-primary);
+  font-size: 0.875rem;
+  text-align: left;
+  cursor: pointer;
+  transition: background-color var(--transition-fast);
+}
+
+.menuItem:hover {
+  background-color: var(--color-bg-tertiary);
+}
+
+.menuItem.danger {
+  color: var(--color-accent-error);
+}
+
+.menuItem.danger:hover {
+  background-color: rgba(239, 68, 68, 0.1);
+}
+
+/* Members */
+.members {
+  margin-bottom: var(--space-4);
+}
+
+.membersHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-2);
+}
+
+.membersLabel {
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.membersContent {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.memberNames {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.memberName {
+  font-size: 0.875rem;
+  color: var(--color-text-secondary);
+}
+
+.noMembers {
+  font-size: 0.875rem;
+  color: var(--color-text-muted);
+  font-style: italic;
+  margin: 0;
+}
+
+/* Footer */
+.footer {
+  display: flex;
+  justify-content: flex-end;
+  padding-top: var(--space-3);
+  border-top: 1px solid var(--color-border-default);
+}
