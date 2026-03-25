@@ -1,0 +1,72 @@
+/**
+ * Docker Compose - Full Stack Application
+ *
+ * Orchestrates backend, frontend, and database services
+ */
+
+version: '3.8'
+
+services:
+  # Backend API
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile.backend
+    container_name: ai-workhub-backend
+    ports:
+      - "3001:3001"
+    environment:
+      - NODE_ENV=production
+      - PORT=3001
+      - DATABASE_URL=./data/ai-workhub.db
+      - UPLOAD_DIR=/app/storage/uploads
+      - LOG_LEVEL=info
+    volumes:
+      - backend-data:/app/storage
+      - ./data:/app/data
+    networks:
+      - ai-workhub-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:3001/api/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+
+  # Frontend (Next.js)
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile.frontend
+    container_name: ai-workhub-frontend
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      - NEXT_PUBLIC_API_URL=http://backend:3001/api
+    networks:
+      - ai-workhub-network
+    depends_on:
+      backend:
+        condition: service_healthy
+    restart: unless-stopped
+
+  # Database (SQLite - for development/small scale)
+  # For production, consider using PostgreSQL or MySQL
+  db:
+    image: alpine:latest
+    container_name: ai-workhub-db
+    volumes:
+      - db-data:/data
+    networks:
+      - ai-workhub-network
+    restart: unless-stopped
+
+networks:
+  ai-workhub-network:
+    driver: bridge
+
+volumes:
+  backend-data:
+  db-data:
