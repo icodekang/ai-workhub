@@ -4,6 +4,9 @@
  * Minimalist Premium Design System Components
  */
 
+// Layout
+export { Sidebar, AppShell } from './Layout';
+
 // Button
 export { Button } from './Button';
 export type { ButtonProps, ButtonVariant, ButtonSize } from './Button';
