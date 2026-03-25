@@ -30,3 +30,10 @@ export type { ModalProps } from './Modal';
 // Avatar
 export { Avatar, AvatarGroup } from './Avatar';
 export type { AvatarProps, AvatarGroupProps, AvatarSize } from './Avatar';
+
+// Error Boundary
+export { ErrorBoundary } from './Error';
+
+// Toast
+export { ToastContainer, useToast } from './Toast';
+export type { ToastMessage, ToastType } from './Toast';
