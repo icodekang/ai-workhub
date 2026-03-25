@@ -1,0 +1,144 @@
+/* Conversations Page Styles */
+
+.page {
+  display: flex;
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* Sidebar */
+.sidebar {
+  width: 320px;
+  background-color: var(--color-bg-secondary);
+  border-right: 1px solid var(--color-border-default);
+  flex-shrink: 0;
+}
+
+/* Main */
+.main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+/* Placeholder */
+.placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  text-align: center;
+  padding: var(--space-8);
+}
+
+.placeholderIcon {
+  color: var(--color-text-muted);
+  margin-bottom: var(--space-6);
+}
+
+.placeholder h2 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--color-text-primary);
+  margin: 0 0 var(--space-2);
+}
+
+.placeholder p {
+  color: var(--color-text-secondary);
+  margin: 0 0 var(--space-6);
+  max-width: 300px;
+}
+
+/* New Chat Form */
+.newChatForm {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+}
+
+.typeToggle {
+  display: flex;
+  gap: var(--space-2);
+  background-color: var(--color-bg-secondary);
+  padding: var(--space-1);
+  border-radius: var(--radius-md);
+}
+
+.toggleOption {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  padding: var(--space-3);
+  background: transparent;
+  border: none;
+  border-radius: var(--radius-sm);
+  color: var(--color-text-secondary);
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.toggleOption:hover {
+  color: var(--color-text-primary);
+}
+
+.toggleOption.active {
+  background-color: var(--color-bg-tertiary);
+  color: var(--color-text-primary);
+}
+
+.selection {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.label {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--color-text-primary);
+}
+
+.select {
+  width: 100%;
+  height: 44px;
+  padding: 0 var(--space-3);
+  background-color: var(--color-bg-secondary);
+  border: 1px solid var(--color-border-default);
+  border-radius: var(--radius-md);
+  color: var(--color-text-primary);
+  font-size: 0.875rem;
+  cursor: pointer;
+}
+
+.select:focus {
+  outline: none;
+  border-color: var(--color-accent-primary);
+}
+
+.modalActions {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--space-3);
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--color-border-default);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .sidebar {
+    width: 100%;
+  }
+
+  .sidebar.hiddenMobile {
+    display: none;
+  }
+
+  .main.visibleMobile {
+    display: flex;
+  }
+}

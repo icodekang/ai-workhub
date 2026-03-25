@@ -1,0 +1,166 @@
+/* Chat Window Styles */
+
+.container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background-color: var(--color-bg-primary);
+}
+
+/* Header */
+.header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-4);
+  border-bottom: 1px solid var(--color-border-default);
+  background-color: var(--color-bg-secondary);
+}
+
+.backButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  background: transparent;
+  border: none;
+  border-radius: var(--radius-md);
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.backButton:hover {
+  background-color: var(--color-bg-tertiary);
+  color: var(--color-text-primary);
+}
+
+.headerInfo {
+  flex: 1;
+}
+
+.headerTitle {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--color-text-primary);
+  margin: 0;
+}
+
+.headerSubtitle {
+  font-size: 0.75rem;
+  color: var(--color-text-secondary);
+  margin: var(--space-1) 0 0;
+}
+
+/* Messages */
+.messages {
+  flex: 1;
+  overflow-y: auto;
+  padding: var(--space-4);
+}
+
+.empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+.empty p {
+  color: var(--color-text-secondary);
+  font-size: 0.875rem;
+}
+
+/* Date Group */
+.dateGroup {
+  margin-bottom: var(--space-4);
+}
+
+.dateDivider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: var(--space-4) 0;
+}
+
+.dateDivider span {
+  padding: var(--space-1) var(--space-3);
+  background-color: var(--color-bg-tertiary);
+  border-radius: var(--radius-full);
+  font-size: 0.75rem;
+  color: var(--color-text-muted);
+}
+
+/* Message */
+.message {
+  display: flex;
+  gap: var(--space-3);
+  margin-bottom: var(--space-4);
+}
+
+.message.user {
+  flex-direction: row-reverse;
+}
+
+.messageContent {
+  max-width: 70%;
+  min-width: 120px;
+}
+
+.messageHeader {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin-bottom: var(--space-1);
+}
+
+.message.user .messageHeader {
+  flex-direction: row-reverse;
+}
+
+.senderName {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--color-text-primary);
+}
+
+.time {
+  font-size: 0.625rem;
+  color: var(--color-text-muted);
+}
+
+.messageText {
+  padding: var(--space-3);
+  border-radius: var(--radius-lg);
+  font-size: 0.875rem;
+  line-height: 1.5;
+  margin: 0;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.message.agent .messageText {
+  background-color: var(--color-bg-tertiary);
+  color: var(--color-text-primary);
+  border-bottom-left-radius: var(--radius-sm);
+}
+
+.message.user .messageText {
+  background: linear-gradient(135deg, var(--color-accent-primary) 0%, var(--color-accent-secondary) 100%);
+  color: white;
+  border-bottom-right-radius: var(--radius-sm);
+}
+
+/* Input Area */
+.inputArea {
+  display: flex;
+  gap: var(--space-3);
+  padding: var(--space-4);
+  border-top: 1px solid var(--color-border-default);
+  background-color: var(--color-bg-secondary);
+}
+
+.inputArea > div:first-child {
+  flex: 1;
+}
